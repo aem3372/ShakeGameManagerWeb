@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">游戏管理</li>
+          <li><a href="/gamesetting">新建/修改游戏</a></li>
+          <li class="active"><a href="/gamelist">游戏列表</a></li>
+        </ul>
+      </div><!--/.well -->
+    </div><!--/span-->
+    <div class="span10">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div id="legend">
+            <legend class="">记录列表</legend>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+               <tr>
+                  <th>游戏名</th>
+                  <th>开始时间</th>
+                  <th>持续时间(秒)</th>
+                  <th>操作</th>
+               </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($recodes as $item): ?>
+                 <tr>
+                  <td>现场互动</td>
+                  <td>2016-05-19</td>
+                  <td>60</td>
+                  <td>
+                    <div class="pull-right">
+                      <a href="/life/index.php/manager/recode/<?php echo $item['id']; ?>"><i style="vertical-align: top;" class="icon-pencil"></i></a>&nbsp;&nbsp;&nbsp;
+                      <!--<a href="/life/index.php/manager/recode/<?php echo $item['id']; ?>"><i style="vertical-align: top;" class="icon-trash"></i></a> -->
+                    </div>    
+                  </td>
+                </tr>
+              <?php endforeach ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

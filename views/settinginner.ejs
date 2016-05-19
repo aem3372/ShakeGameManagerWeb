@@ -1,0 +1,84 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">游戏管理</li>
+          <li class="active"><a href="/gamesetting">新建/修改游戏</a></li>
+          <li><a href="/gamelist">游戏列表</a></li>
+        </ul>
+      </div><!--/.well -->
+    </div><!--/span-->
+    <div class="span10">
+      <form class="form-horizontal" action='' method="POST">
+        <fieldset>
+          <div id="legend">
+            <% if(hasRecode === 'true') { %>
+                <legend class="">修改游戏</legend>
+            <% } else { %>
+                <legend class="">新建游戏</legend>
+            <% } %>
+          </div>
+          <div class="control-group">
+
+            <label class="control-label"  for="word">游戏名</label>
+            <div class="controls">
+              <% if(hasRecode === 'true') { %>
+                <input type="text" id="word" name="word" placeholder="" class="input-xlarge" value="<?php echo $recode['word'];?>" required />
+              <% } else { %>
+                <input type="text" id="word" name="word" placeholder="" class="input-xlarge" value="" required />
+              <% } %>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" for="date" >开始时间</label>
+            <div class="controls">
+              <% if(hasRecode === 'true') { %>
+                <input type="text" name="date" id="datetimepicker" class="input-xlarge" value="<?php echo $recode['date'];?>" required />
+              <% } else { %>
+                <input type="text" name="date" id="datetimepicker" class="input-xlarge" value="" required />
+              <% } %>
+            </div>
+          </div>
+
+
+          <div class="control-group">
+            <label class="control-label" for="status" >持续时间(秒)</label>
+            <div class="controls">
+              <input type="text" id="time" name="time" placeholder="" class="input-xlarge" value="" required />
+            </div>
+          </div>
+  
+          <div class="control-group">
+            <div class="controls">
+              <% if(hasRecode === 'true') { %>
+                <button type="submit" class="btn btn-primary">保  存</button>
+              <% } else { %>
+                <button type="submit" class="btn btn-primary">新  建</button>
+              <% } %>
+              &nbsp;&nbsp;
+              <a class="btn" href='/gamelist'>返 回</a>
+            </div>
+          </div>
+          
+          <% if(hasError === 'true') { %>
+            <div class="control-group">
+              <div class="controls">
+                <div class="span4">
+                  <div class="alert alert-error">
+                    <a class="close" data-dismiss="alert">×</a>
+                    <strong>Error!</strong> <?php echo $error_message; ?>
+                  </div>
+                </div>
+                <div class="span8">
+                </div>
+              </div>
+            </div>
+          <% } %>
+          
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
