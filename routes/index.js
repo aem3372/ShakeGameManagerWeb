@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var crypto = require('crypto');
+var socket = require('../socket');
 var User = require('../models/user');
-
+var Game = require('../models/game');
+var DateUtil = require('../utils/time')
 var DEBUG = true;
 
 /* GET home page. */
@@ -17,16 +19,46 @@ router.get('/gamelist', function(req, res, next) {
   if(!req.session.user) {
     return res.redirect('/');
   }
-  res.render('gamelist', { errorMsg: '' });
+
+  Game.get({"adminId": req.session.user._id}, function(err, doc) {
+    doc.forEach(function(game) {
+      var date = DateUtil.format(new Date(game.startTime), 'yyyy-MM-dd hh:mm');
+      game.startTimeFormat = '' + date;
+      console.log(game.startTime);
+    });
+    console.log(doc);
+    res.render('gamelist', {
+      games: doc,
+      errorMsg: ''
+    });    
+  });
 });
 
 router.get('/gamesetting', function(req, res, next) {
   if(!req.session.user) {
     return res.redirect('/');
   }
-  res.render('gamesetting', { 
-    hasRecode: 'false',
-    hasError: 'false' 
+  if(!req.query.recode) {
+    return res.render('gamesetting', { 
+      hasRecode: 'false',
+      hasError: 'false' 
+    });
+  }
+  var name = req.query.recode;
+  if(DEBUG) {
+    console.log(name);
+  }
+  Game.find({"name": name}, function(err, game) {
+    if(DEBUG) {
+      console.log(game);
+    }
+    return res.render('gamesetting', { 
+      hasRecode: 'true',
+      hasError: 'false',
+      word: game.name,
+      date: DateUtil.format(new Date(game.startTime), 'yyyy-MM-dd hh:mm'),
+      time: game.duration
+    });
   });
 });
 
@@ -34,10 +66,29 @@ router.post('/gamesetting', function(req, res, next) {
   if(!req.session.user) {
     return res.redirect('/');
   }
-  
-  res.render('gamesetting', { 
-    hasRecode: 'false',
-    hasError: 'false' 
+  var name = String(req.body.word);
+  var date = String(req.body.date);
+  var time = String(req.body.time);
+  if(DEBUG) {
+    console.log({"name": name, "date": date, "time": time});
+  }
+  new Game({
+    name: name,
+    adminId: req.session.user._id,
+    startTime: new Date(date).getTime(),
+    duration: time
+  }).save(function(err) {
+    socket.emit('notifyUpdate', {
+      startTime: new Date(date).getTime(),
+      duration: time
+    });
+    res.render('gamesetting', { 
+      hasRecode: 'true',
+      hasError: 'false',
+      word: name,
+      date: date,
+      time: time
+    });
   });
 });
 

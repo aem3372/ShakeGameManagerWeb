@@ -27,19 +27,19 @@
                </tr>
             </thead>
             <tbody>
-              <?php foreach ($recodes as $item): ?>
-                 <tr>
-                  <td>现场互动</td>
-                  <td>2016-05-19</td>
-                  <td>60</td>
+              <% games.forEach(function(game) { %>
+                <tr>
+                  <td><%= game.name %></td>
+                  <td><%= game.startTimeFormat %></td>
+                  <td><%= game.duration %></td>
                   <td>
                     <div class="pull-right">
-                      <a href="/life/index.php/manager/recode/<?php echo $item['id']; ?>"><i style="vertical-align: top;" class="icon-pencil"></i></a>&nbsp;&nbsp;&nbsp;
+                      <a href="/gamesetting?recode=<%= game.name %>"><i style="vertical-align: top;" class="icon-pencil"></i></a>&nbsp;&nbsp;&nbsp;
                       <!--<a href="/life/index.php/manager/recode/<?php echo $item['id']; ?>"><i style="vertical-align: top;" class="icon-trash"></i></a> -->
                     </div>    
                   </td>
                 </tr>
-              <?php endforeach ?>
+              <% }) %>
             </tbody>
           </table>
         </div>

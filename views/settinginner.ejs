@@ -24,7 +24,7 @@
             <label class="control-label"  for="word">游戏名</label>
             <div class="controls">
               <% if(hasRecode === 'true') { %>
-                <input type="text" id="word" name="word" placeholder="" class="input-xlarge" value="<?php echo $recode['word'];?>" required />
+                <input type="text" id="word" name="word" placeholder="" class="input-xlarge" value="<%= word %>" required />
               <% } else { %>
                 <input type="text" id="word" name="word" placeholder="" class="input-xlarge" value="" required />
               <% } %>
@@ -35,7 +35,7 @@
             <label class="control-label" for="date" >开始时间</label>
             <div class="controls">
               <% if(hasRecode === 'true') { %>
-                <input type="text" name="date" id="datetimepicker" class="input-xlarge" value="<?php echo $recode['date'];?>" required />
+                <input type="text" name="date" id="datetimepicker" class="input-xlarge" value="<%= date %>" required />
               <% } else { %>
                 <input type="text" name="date" id="datetimepicker" class="input-xlarge" value="" required />
               <% } %>
@@ -46,7 +46,11 @@
           <div class="control-group">
             <label class="control-label" for="status" >持续时间(秒)</label>
             <div class="controls">
-              <input type="text" id="time" name="time" placeholder="" class="input-xlarge" value="" required />
+              <% if(hasRecode === 'true') { %>
+                <input type="text" name="time" id="datetimepicker" class="input-xlarge" value="<%= time %>" required />
+              <% } else { %>
+                <input type="text" name="time" id="datetimepicker" class="input-xlarge" value="" required />
+              <% } %>
             </div>
           </div>
   
