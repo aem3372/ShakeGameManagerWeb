@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var crypto = require('crypto');
+var md5 = crypto.createHash('md5');
 var socket = require('../socket');
 var User = require('../models/user');
 var Game = require('../models/game');
@@ -95,6 +96,7 @@ router.post('/gamesetting', function(req, res, next) {
 router.post('/login', function(req, res, next) {
   var name = String(req.body.name);
   var password = String(req.body.password);
+  password = md5.update(password).digest('base64');
   if(DEBUG) {
     console.log(name);
   }
@@ -102,20 +104,23 @@ router.post('/login', function(req, res, next) {
     if(DEBUG) {
       console.log('not allow');
     }
-    return res.end();  //not allow
+    return res.render('index', { errorMsg: '信息错误' });
   }
   User.find({"name": name}, function(err, user) {
     if(err) {
       if(DEBUG) {
         console.log(err);
       }
-      return res.end();
+      return res.render('index', { errorMsg: '信息错误' });
+    }
+    if(!user) {
+      return res.render('index', { errorMsg: '信息错误' });
     }
     if (user.password != password) {
       if(DEBUG) {
         console.log('password error, current password: ' + password + ', db password:' + user.password);
       }
-      return res.end();
+      return res.render('index', { errorMsg: '信息错误' });
     }
     if(DEBUG) {
       console.log('login successed');

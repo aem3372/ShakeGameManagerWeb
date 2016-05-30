@@ -4,7 +4,7 @@
       <div class="well sidebar-nav">
         <ul class="nav nav-list">
           <li class="nav-header">游戏管理</li>
-          <li><a href="/gamesetting">新建/修改游戏</a></li>
+          <li><a href="/gamesetting">新建游戏</a></li>
           <li class="active"><a href="/gamelist">游戏列表</a></li>
         </ul>
       </div><!--/.well -->
@@ -13,7 +13,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <div id="legend">
-            <legend class="">记录列表</legend>
+            <legend class="">游戏列表</legend>
           </div>
         </div>
         <div class="table-responsive">
@@ -23,7 +23,6 @@
                   <th>游戏名</th>
                   <th>开始时间</th>
                   <th>持续时间(秒)</th>
-                  <th>操作</th>
                </tr>
             </thead>
             <tbody>
@@ -32,12 +31,6 @@
                   <td><%= game.name %></td>
                   <td><%= game.startTimeFormat %></td>
                   <td><%= game.duration %></td>
-                  <td>
-                    <div class="pull-right">
-                      <a href="/gamesetting?recode=<%= game.name %>"><i style="vertical-align: top;" class="icon-pencil"></i></a>&nbsp;&nbsp;&nbsp;
-                      <!--<a href="/life/index.php/manager/recode/<?php echo $item['id']; ?>"><i style="vertical-align: top;" class="icon-trash"></i></a> -->
-                    </div>    
-                  </td>
                 </tr>
               <% }) %>
             </tbody>

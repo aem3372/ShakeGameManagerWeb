@@ -19,10 +19,12 @@ var app = express();
 require('./models/connect');
 
 // create default user
+//var crypto = require('crypto');
+//var md5 = crypto.createHash('md5');
 //var User = require('./models/user');
 //new User({
 //  name: 'admin',
-//  password: 'admin'
+//  password: md5.update('admin').digest('base64')
 //}).save(function(err) {
 //});
 
